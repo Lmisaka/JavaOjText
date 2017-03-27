@@ -20,8 +20,9 @@
 
     <div class="header">
         <div class="switch" id="switch"><a class="switch_btn_focus" id="switch_qlogin" href="javascript:void(0);"
-                                           tabindex="7">管理员登录</a>
-    </div>
+                                           tabindex="7">管理员登陆</a>
+            <div class="switch_bottom" id="switch_bottom" style="position: absolute; width: 64px; left: 0px;"></div>
+        </div>
     </div>
 
     <div class="web_qr_login" id="web_qr_login" style="display: block; height: 235px;">
