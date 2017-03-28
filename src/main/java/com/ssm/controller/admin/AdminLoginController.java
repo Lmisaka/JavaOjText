@@ -1,8 +1,8 @@
 package com.ssm.controller.admin;
 
-import com.alibaba.fastjson.JSONObject;
 import com.ssm.domain.admin.AdminUser;
 import com.ssm.service.admin.AdminUserService;
+import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +37,7 @@ public class AdminLoginController {
             json.put("result", "error");
             return json;
         }
+        System.out.println(adminUserService.getAdminUserByUsername(adminUser.getAdUsername()));
         if (adminUserService.getAdminUserByUsername(adminUser.getAdUsername()).equals(adminUser.getAdPassword())) {
             json.put("result", "success");
             return json;

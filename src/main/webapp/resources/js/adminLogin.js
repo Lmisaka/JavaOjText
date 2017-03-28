@@ -21,6 +21,7 @@ function admin_login() {
             dataType: 'json',
             data:JSON.stringify(data),
             success: function (data) {
+                alert("ok");
                 if (data.result == "success") {
                     alert("success");
                     window.location.href = "text";
