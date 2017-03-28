@@ -35,20 +35,20 @@
 
 
                 <div class="login_form">
-                    <form action="" name="loginform" accept-charset="utf-8" id="login_form" onsubmit="login()" class="loginForm"
+                    <form action="" name="loginform" accept-charset="utf-8" id="login_form" onsubmit="admin_login()" class="loginForm"
                           method="post"><input type="hidden" name="did" value="0"/>
                         <input type="hidden" name="to" value="log"/>
                         <div class="uinArea" id="uinArea">
-                            <label class="input-tips" for="username">帐号：</label>
+                            <label class="input-tips" for="adUsername">帐号：</label>
                             <div class="inputOuter" id="uArea">
-                                <input type="text" id="username" name="ad_username" class="inputstyle"/>
+                                <input type="text" id="adUsername" name="adUsername" class="inputstyle"/>
                             </div>
                         </div>
                         <div class="pwdArea" id="pwdArea">
-                            <label class="input-tips" for="password">密码：</label>
+                            <label class="input-tips" for="adPassword">密码：</label>
                             <div class="inputOuter" id="pArea">
 
-                                <input type="password" id="password" name="ad_password" class="inputstyle"/>
+                                <input type="password" id="adPassword" name="adPassword" class="inputstyle"/>
                             </div>
                         </div>
 

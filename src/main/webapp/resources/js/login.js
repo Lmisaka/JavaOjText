@@ -22,27 +22,28 @@ $(function () {
     }
 });
 function login() {
-        //登陆ajax
-        var data = {
-            "username": $("#username").val(),
-            "password": $('#password').val()
-        };
-        $.ajax({
-            type: 'POST',
-            url: '/text/login.do',
-            contentType: 'application/json;charset=UTF-8',
-            dataType: 'json',
-            data:JSON.stringify(data),
-            success: function (data) {
-                if (data.result == "success") {
-                    alert("success");
-                    window.location.href = "text";
-                } else {
-                    alert("error");
-                }
-            },
-        });
+    //登陆ajax
+    var data = {
+        "username": $("#username").val(),
+        "password": $('#password').val(),
+        statis: 1
     };
+    $.ajax({
+        type: 'POST',
+        url: '/user/login.do',
+        contentType: 'application/json;charset=UTF-8',
+        dataType: 'json',
+        data: JSON.stringify(data),
+        success: function (data) {
+            if (data.result == "success") {
+                alert("success");
+                window.location.href = "text";
+            } else {
+                alert("error");
+            }
+        },
+    });
+};
 function logintab() {
     scrollTo(0);
     $('#switch_qlogin').removeClass("switch_btn_focus").addClass('switch_btn');

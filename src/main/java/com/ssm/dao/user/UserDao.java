@@ -1,9 +1,7 @@
 package com.ssm.dao.user;
 
 import com.ssm.domain.user.User;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface UserDao {
     int deleteByPrimaryKey(String username);
 

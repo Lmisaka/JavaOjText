@@ -1,7 +1,7 @@
 package com.ssm.controller.user;
 
+import com.alibaba.fastjson.JSONObject;
 import com.ssm.domain.user.User;
-import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * 测试用controller
+ *
  * Created by OvO on 2017/3/19.
  */
 @Controller
@@ -28,6 +28,7 @@ public class LoginController {
     @RequestMapping(value = "/login.do", method = RequestMethod.POST)
     @ResponseBody
     public JSONObject login(@RequestBody User user, HttpServletResponse response) {
+        System.out.println(user);
         //要返回的json数据
         JSONObject json = new JSONObject();
         if (user.getPassword().equals("123")) {

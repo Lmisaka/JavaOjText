@@ -8,15 +8,15 @@ $(function () {
         $('#web_qr_login').css('display', 'block');
     });
 });
-function login() {
+function admin_login() {
         //登陆ajax
         var data = {
-            "username": $("#ad_username").val(),
-            "password": $('#ad_password').val()
+            "adUsername": $("#adUsername").val(),
+            "adPassword": $('#adPassword').val()
         };
         $.ajax({
             type: 'POST',
-            url: '/text/login.do',
+            url: '/admin/login.do',
             contentType: 'application/json;charset=UTF-8',
             dataType: 'json',
             data:JSON.stringify(data),
@@ -29,4 +29,4 @@ function login() {
                 }
             },
         });
-    };
+};
