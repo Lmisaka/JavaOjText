@@ -13,10 +13,7 @@
 
     <context:annotation-config/>
 
-    <context:component-scan base-package="com.ssm.controller" use-default-filters="false">
-        <context:include-filter type="annotation"
-                                expression="org.springframework.stereotype.Controller"/>
-    </context:component-scan>
+    <context:component-scan base-package="com.ssm.controller"/>
 
     <!-- HandlerMapping, 无需配置， Spring MVC可以默认启动。 DefaultAnnotationHandlerMapping
         annotation-driven HandlerMapping -->
@@ -66,24 +63,18 @@
     <!--</list>-->
     <!--</property>-->
     <!--</bean>-->
-    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
-        <property name="viewResolvers">
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="contentType" value="text/html"/>
+        <property name="prefix" value="/WEB-INF/pages/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+    <!--json处理-->
+    <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+        <property name="supportedMediaTypes">
             <list>
-                <bean class="org.springframework.web.servlet.view.BeanNameViewResolver"/>
-                <bean
-                        class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-                    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
-                    <property name="contentType" value="text/html"/>
-                    <property name="prefix" value="/WEB-INF/pages/"/>
-                    <property name="suffix" value=".jsp"/>
-                </bean>
-            </list>
-        </property>
-        <property name="defaultViews">
-            <list>
-                <bean
-                        class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
-                </bean>
+                <value>application/json;charset=UTF-8</value>
+                <value>text/html;charset=UTF-8</value>
             </list>
         </property>
     </bean>

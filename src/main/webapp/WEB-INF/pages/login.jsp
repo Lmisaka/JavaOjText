@@ -9,9 +9,9 @@
 <head>
     <title>大气简洁后台登录模板下载</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <script type="text/javascript" src="resources/js/jquery-1.9.0.min.js"></script>
-    <script type="text/javascript" src="resources/js/login.js"></script>
-    <link href="resources/css/login2.css" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="../../resources/js/jquery-1.9.0.min.js"></script>
+    <script type="text/javascript" src="../../resources/js/login.js"></script>
+    <link href="../../resources/css/login2.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <h1>后台登录模板下载<sup>V2014</sup></h1>

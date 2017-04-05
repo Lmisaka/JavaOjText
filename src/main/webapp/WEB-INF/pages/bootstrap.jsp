@@ -5,11 +5,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+    <link href="../../resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-<div class="container">
-    <div class="row">
+<div class="container-fluid">
+    <div class="row-fluid">
         <div class="span12">
             <div class="navbar navbar-inverse">
                 <div class="navbar-inner">
@@ -86,20 +86,29 @@
             </div>
             <div class="tabbable tabs-left" id="tabs-483381">
                 <ul class="nav nav-tabs">
+                    <li>
+                        <a data-toggle="tab" href="#panel-956299">查看</a>
+                    </li>
                     <li class="active">
                         <a data-toggle="tab" href="#panel-802227">选择题</a>
                     </li>
                     <li>
-                        <a data-toggle="tab" href="#panel-956299">编程题</a>
+                        <a data-toggle="tab" href="#panel-123456">编程题</a>
+                    </li>
+                    <li>
+                        <a data-toggle="tab" href="#panel-654321">非编程题</a>
+                    </li>
+                    <li>
+                        <a data-toggle="tab" href="#panel-123456">填空题</a>
                     </li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="panel-802227">
                         <form class="form-horizontal">
                             <div class="control-group">
-                                <label class="control-label" for="inputEmail">题目描述：</label>
+                                <label class="control-label" for="selectProblem">题目描述：</label>
                                 <div class="controls">
-									<textarea cols="25" id="inputEmail" rows="5">
+									<textarea cols="50" id="selectProblem" rows="5">
 									</textarea>
                                 </div>
                             </div>
@@ -129,28 +138,67 @@
                             </div>
                             <div class="control-group">
                                 <div class="controls">
-                                    <label class="checkbox"><input type="checkbox" /> Remember me</label> <button class="btn" type="submit">提交</button>
+                                    <label class="checkbox"><button class="btn" type="submit">提交</button></label>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="tab-pane" id="panel-956299">
                         <p>
-                            第二部分内容.
+                            查看
                         </p>
                     </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="span8">
-                </div>
-                <div class="span4">
+                    <div class="tab-pane" id="panel-123456">
+                        <form class="form-horizontal">
+                            <div class="control-group">
+                                <label class="control-label" for="programmeDetail">题目描述：</label>
+                                <div class="controls">
+									<textarea cols="50" id="programmeDetail" rows="5">
+									</textarea>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="inputLimitTime">关键词</label>
+                                <div class="controls">
+                                    <input id="inputLimitTime" type="text" />
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="controls">
+                                    <label class="checkbox"><button class="btn" type="submit">提交</button></label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="panel-654321">
+                        <form class="form-horizontal">
+                            <div class="control-group">
+                                <label class="control-label" for="blankDetail">题目描述：</label>
+                                <div class="controls">
+									<textarea cols="50" id="blankDetail" rows="5">
+									</textarea>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="blankAnswer">答案：</label>
+                                <div class="controls">
+									<textarea cols="50" id="blankAnswer" rows="5">
+									</textarea>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <div class="controls">
+                                    <label class="checkbox"><button class="btn" type="submit">提交</button></label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script src="resources/js/jquery-3.2.0.js" type="text/javascript"></script>
-<script src="resources/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="../../resources/js/jquery-3.2.0.js" type="text/javascript"></script>
+<script src="../../resources/js/bootstrap.min.js" type="text/javascript"></script>
 </body>
 </html>

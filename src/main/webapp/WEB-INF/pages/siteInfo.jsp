@@ -4,7 +4,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <title>管理界面</title>
-  <link href="resources/css/style.css" rel="stylesheet" type="text/css" />
+  <link href="../../resources/css/style.css" rel="stylesheet" type="text/css" />
 </head>
 <body id="page">
 <h2>系统信息</h2>
