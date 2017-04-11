@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.dao.exam.ProgrammeDao" >
+  <resultMap id="BaseResultMap" type="com.ssm.domain.exam.Programme" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="time_limit" property="timeLimit" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ssm.domain.exam.ProgrammeWithBLOBs" extends="BaseResultMap" >
+    <result column="detail" property="detail" jdbcType="LONGVARCHAR" />
+    <result column="out_put" property="output" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, time_limit
+  </sql>
+  <sql id="Blob_Column_List" >
+    detail, out_put
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from programme_problem
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from programme_problem
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ssm.domain.exam.ProgrammeWithBLOBs" >
+    insert into programme_problem (id, time_limit, detail, 
+      out_put)
+    values (#{id,jdbcType=INTEGER}, #{timeLimit,jdbcType=INTEGER}, #{detail,jdbcType=LONGVARCHAR}, 
+      #{output,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssm.domain.exam.ProgrammeWithBLOBs" >
+    insert into programme_problem
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="timeLimit != null" >
+        time_limit,
+      </if>
+      <if test="detail != null" >
+        detail,
+      </if>
+      <if test="output != null" >
+        out_put,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="timeLimit != null" >
+        #{timeLimit,jdbcType=INTEGER},
+      </if>
+      <if test="detail != null" >
+        #{detail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="output != null" >
+        #{output,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssm.domain.exam.ProgrammeWithBLOBs" >
+    update programme_problem
+    <set >
+      <if test="timeLimit != null" >
+        time_limit = #{timeLimit,jdbcType=INTEGER},
+      </if>
+      <if test="detail != null" >
+        detail = #{detail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="output != null" >
+        out_put = #{output,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ssm.domain.exam.ProgrammeWithBLOBs" >
+    update programme_problem
+    set time_limit = #{timeLimit,jdbcType=INTEGER},
+      detail = #{detail,jdbcType=LONGVARCHAR},
+      out_put = #{output,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.domain.exam.Programme" >
+    update programme_problem
+    set time_limit = #{timeLimit,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

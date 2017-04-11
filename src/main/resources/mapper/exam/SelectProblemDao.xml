@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.dao.exam.SelectProblemDao" >
+  <resultMap id="BaseResultMap" type="com.ssm.domain.exam.SelectProblem" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="correct" property="correct" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.ssm.domain.exam.SelectProblemWithBLOBs" extends="BaseResultMap" >
+    <result column="detail" property="selectDetail" jdbcType="LONGVARCHAR" />
+    <result column="select_a" property="selectA" jdbcType="LONGVARCHAR" />
+    <result column="select_b" property="selectB" jdbcType="LONGVARCHAR" />
+    <result column="select_c" property="selectC" jdbcType="LONGVARCHAR" />
+    <result column="select_d" property="selectD" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, correct
+  </sql>
+  <sql id="Blob_Column_List" >
+    detail, select_a, select_b, select_c, select_d
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from select_problem
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from select_problem
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ssm.domain.exam.SelectProblemWithBLOBs" >
+    insert into select_problem (id, correct, detail,
+      select_a, select_b, select_c, 
+      select_d)
+    values (#{id,jdbcType=INTEGER}, #{correct,jdbcType=INTEGER}, #{selectDetail,jdbcType=LONGVARCHAR},
+      #{selectA,jdbcType=LONGVARCHAR}, #{selectB,jdbcType=LONGVARCHAR}, #{selectC,jdbcType=LONGVARCHAR}, 
+      #{selectD,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ssm.domain.exam.SelectProblemWithBLOBs" >
+    insert into select_problem
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="correct != null" >
+        correct,
+      </if>
+      <if test="selectDetail != null" >
+        detail,
+      </if>
+      <if test="selectA != null" >
+        select_a,
+      </if>
+      <if test="selectB != null" >
+        select_b,
+      </if>
+      <if test="selectC != null" >
+        select_c,
+      </if>
+      <if test="selectD != null" >
+        select_d,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="correct != null" >
+        #{correct,jdbcType=INTEGER},
+      </if>
+      <if test="selectDetail != null" >
+        #{detail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="selectA != null" >
+        #{selectA,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="selectB != null" >
+        #{selectB,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="selectC != null" >
+        #{selectC,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="selectD != null" >
+        #{selectD,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ssm.domain.exam.SelectProblemWithBLOBs" >
+    update select_problem
+    <set >
+      <if test="correct != null" >
+        correct = #{correct,jdbcType=INTEGER},
+      </if>
+      <if test="selectDetail != null" >
+        detail = #{detail,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="selectA != null" >
+        select_a = #{selectA,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="selectB != null" >
+        select_b = #{selectB,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="selectC != null" >
+        select_c = #{selectC,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="selectD != null" >
+        select_d = #{selectD,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ssm.domain.exam.SelectProblemWithBLOBs" >
+    update select_problem
+    set correct = #{correct,jdbcType=INTEGER},
+      detail = #{detail,jdbcType=LONGVARCHAR},
+      select_a = #{selectA,jdbcType=LONGVARCHAR},
+      select_b = #{selectB,jdbcType=LONGVARCHAR},
+      select_c = #{selectC,jdbcType=LONGVARCHAR},
+      select_d = #{selectD,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ssm.domain.exam.SelectProblem" >
+    update select_problem
+    set correct = #{correct,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

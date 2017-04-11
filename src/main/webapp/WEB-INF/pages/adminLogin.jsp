@@ -17,9 +17,19 @@
 <script language="JavaScript">
     function admin_login() {
         //登陆ajax
+        if ("" == $("#adUsername").val()) {
+            alert("用户名不能为空");
+            window.location.reload(true);
+            return false;
+        }
+        if ("" == $("#adPassword").val()) {
+            alert("密码不能为空");
+            window.location.reload(true);
+            return false;
+        }
         var data = {
             "adUsername": $("#adUsername").val(),
-            "adPassword": $('#adPassword').val()
+            "adPassword": $("#adPassword").val()
         };
         $.ajax({
             type: 'POST',
@@ -27,14 +37,21 @@
             url: '/admin/login.do',
             contentType: 'application/json;charset=UTF-8',
             dataType: 'json',
+            async: false, //false为同步请求，true为异步请求
             data: JSON.stringify(data),
             success: function (data) {
                 if (data.result == "success") {
-                    window.location.href = "http://localhost:8080/admin/index?username="+$("#adUsername").val();
+                    var url = "http://localhost:8080/admin/index?username=" + $("#adUsername").val()
+                    window.location = url;
+                    alert("登陆成功");
                 } else {
-                    alert("error");
+                    alert("密码错误或该用户不存在");
                 }
             },
+            error: function () {
+                alert("登陆失败");
+                window.location.reload(true);
+            }
         });
     }
 </script>
@@ -52,7 +69,7 @@
         <div class="web_login" id="web_login">
             <div class="login-box">
                 <div class="login_form">
-                    <form action="" name="loginform"  accept-charset="utf-8" id="login_form"
+                    <form action="" name="loginform" accept-charset="utf-8" id="login_form"
                           class="loginForm"
                           method="post"><input type="hidden" name="did" value="0"/>
                         <input type="hidden" name="to" value="log"/>
@@ -70,7 +87,8 @@
                             </div>
                         </div>
 
-                        <div style="padding-left:50px;margin-top:20px;"><input type="submit" onclick="admin_login()" id="submit" value="登 录"
+                        <div style="padding-left:50px;margin-top:20px;"><input type="submit" onclick="admin_login()"
+                                                                               id="submit" value="登 录"
                                                                                style="width:150px;"
                                                                                class="button_blue"/></div>
                     </form>

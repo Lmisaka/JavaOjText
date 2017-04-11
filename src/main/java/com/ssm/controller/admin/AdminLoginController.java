@@ -28,10 +28,10 @@ public class AdminLoginController {
     private AdminUserService adminUserService;
 
     @RequestMapping(value = "/index")
-    public ModelAndView index(@RequestParam("username") String username, HttpSession session){//这样可以获取到url?xxx=xxx的值
-        ModelAndView mav=new ModelAndView("adminIndex");
-        mav.addObject("username",username);
-        session.setAttribute("username",username);
+    public ModelAndView index(@RequestParam("username") String username, HttpSession session) {//这样可以获取到url?xxx=xxx的值
+        ModelAndView mav = new ModelAndView("adminIndex");
+        mav.addObject("username", username);
+        session.setAttribute("username", username);
         return mav;
     }
 
@@ -46,13 +46,15 @@ public class AdminLoginController {
         JSONObject json = new JSONObject();
         ModelAndView mav = new ModelAndView();
         Map<String, Object> result = new HashedMap();
-        System.out.println(adminUser);
-        if ("".equals(adminUser.getAdPassword())) {
+
+        //验证账号是否存在
+        if ("".equals(adminUserService.getAdminUserByUsername(adminUser.getAdUsername())) || adminUserService.getAdminUserByUsername(adminUser.getAdUsername()) == null) {
             json.put("result", "error");
             mav.setViewName("adminLogin");
-            result.put("result", "error");
             return json;
         }
+
+        //密码匹配
         if (adminUserService.getAdminUserByUsername(adminUser.getAdUsername()).equals(adminUser.getAdPassword())) {
             json.put("result", "success");
             mav.setViewName("redirect:adminIndex");
@@ -67,8 +69,8 @@ public class AdminLoginController {
     }
 
     @RequestMapping(value = "/textLogin.do", method = RequestMethod.POST)
-    public ModelAndView textLogin(@RequestParam("adUsername") String adUsername,@RequestParam("adPassword") String adPassword) {
-        AdminUser adminUser = new AdminUser(adUsername,adPassword);
+    public ModelAndView textLogin(@RequestParam("adUsername") String adUsername, @RequestParam("adPassword") String adPassword) {
+        AdminUser adminUser = new AdminUser(adUsername, adPassword);
         //要返回的json数据
         JSONObject json = new JSONObject();
         ModelAndView mav = new ModelAndView();
