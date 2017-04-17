@@ -1,35 +1,33 @@
 package com.ssm.service.exam;
 
+import com.ssm.dao.exam.SelectProblemDao;
+import com.ssm.domain.exam.BlankProblem;
 import com.ssm.domain.exam.ProblemEntity;
+import com.ssm.domain.exam.SelectProblemWithBLOBs;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by OvO on 2017/4/5.
  */
-public interface SelectProblemService {
-//    int insert(SelectProblemWithBLOBs record);
-//
-//    SelectProblemWithBLOBs selectById(Integer id);
-//
-//    SelectProblemWithBLOBs selectByKeyWord(String keyWord);
-//
-//    int updateSelective(SelectProblemWithBLOBs record);
-//
-//    int deleteById(Integer id);
-    /**
-     * 插入新的题
-     *
-     * @param record
-     * @return
-     */
-    int insert(ProblemEntity record);
+@Service
+public class SelectProblemService implements ProblemService{
+    @SuppressWarnings("SpringJavaAutowiringInspection")
+    @Autowired
+    private SelectProblemDao selectProblemDao;
 
-    /**
-     * 通过自增ID查询
-     *
-     * @param id
-     * @return
-     */
-    ProblemEntity selectById(Integer id);
+    
+    public int insert(ProblemEntity record) {
+        return selectProblemDao.insert((SelectProblemWithBLOBs) record);
+    }
+
+    
+    public ProblemEntity selectById(Integer id) {
+        return selectProblemDao.selectByPrimaryKey(id);
+    }
 
     /**
      * 通过关键字查询
@@ -37,15 +35,51 @@ public interface SelectProblemService {
      * @param keyWord
      * @return
      */
-    ProblemEntity selectByKeyWorld(String keyWord);
+    
+    public ProblemEntity selectByKeyWorld(String keyWord) {
+        return selectProblemDao.selectByKeyWord(keyWord);
+    }
 
-    int updateByPrimaryKeySelective(ProblemEntity record);
-
+    
+    public int updateByPrimaryKeySelective(ProblemEntity record) {
+        return selectProblemDao.updateByPrimaryKeySelective((SelectProblemWithBLOBs) record);
+    }
 
     /**
      * 通过ID进行删除
+     *
      * @param id
      * @return
      */
-    int deleteByPrimaryKey(Integer id);
+    
+    public int deleteByPrimaryKey(Integer id) {
+        return selectProblemDao.deleteByPrimaryKey(id);
+    }
+
+    
+    public List<BlankProblem> selectAll() {
+        return null;
+    }
+
+    /**
+     * 获取信息条数
+     *
+     * @return
+     */
+    
+    public int getTotalCount() {
+        return selectProblemDao.getTotalCount();
+    }
+
+    /**
+     * 获取指定页数数据
+     *
+     * @param paraMap
+     * @return
+     */
+    
+    public List<ProblemEntity> getLimitList(HashMap<String, Object> paraMap) {
+        return null;
+    }
+
 }

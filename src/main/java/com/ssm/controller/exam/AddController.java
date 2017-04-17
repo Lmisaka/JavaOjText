@@ -35,7 +35,7 @@ public class AddController {
     @ResponseBody
     public JSONObject addBlank(@RequestBody BlankProblem blankProblem) {
         System.out.println(blankProblem + "++++++++++++++++");
-        JSONObject json = add((ProblemService) blankProblemService,blankProblem);
+        JSONObject json = add(blankProblemService,blankProblem);
         return json;
     }
 
@@ -50,7 +50,7 @@ public class AddController {
     @ResponseBody
     public JSONObject addSelect(@RequestBody SelectProblemWithBLOBs selectProblem) {
         System.out.println(selectProblem + "++++" + selectProblem.getCorrect());
-        JSONObject json = add((ProblemService) selectProblemService,selectProblem);
+        JSONObject json = add(selectProblemService,selectProblem);
         return json;
     }
 
@@ -63,7 +63,7 @@ public class AddController {
     @ResponseBody
     public JSONObject addProgramme(@RequestBody ProgrammeWithBLOBs programme) {
         System.out.println(programme + "++++++++++++++++");
-        JSONObject json = add((ProblemService) programmeService,programme);
+        JSONObject json = add(programmeService,programme);
         return json;
     }
 
@@ -76,7 +76,7 @@ public class AddController {
     @ResponseBody
     public JSONObject addUnProgramme(@RequestBody Unprogramme unprogramme) {
         System.out.println(unprogramme + "++++++++++++++++");
-        JSONObject json = add((ProblemService) unProgrammeService,unprogramme);
+        JSONObject json = add(unProgrammeService,unprogramme);
         return json;
     }
 

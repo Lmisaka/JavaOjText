@@ -1,8 +1,11 @@
 package com.ssm.dao.exam;
 
-import com.ssm.domain.exam.Programme;
 import com.ssm.domain.exam.ProgrammeWithBLOBs;
+import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
+import java.util.List;
+@Repository(value="ProgrammeDao")
 public interface ProgrammeDao {
     /**
      * 通过ID进行删除
@@ -38,5 +41,17 @@ public interface ProgrammeDao {
      * @param record
      * @return
      */
-    int updateByPrimaryKey(Programme record);
+    int updateByPrimaryKey(ProgrammeWithBLOBs record);
+    /**
+     * 获取信息条数
+     * @return
+     */
+    int getTotalCount();
+
+    /**
+     * 获取指定页数数据
+     * @param paraMap
+     * @return
+     */
+    List<ProgrammeWithBLOBs> getLimitList(HashMap<String,Object> paraMap);
 }

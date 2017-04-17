@@ -2,7 +2,11 @@ package com.ssm.dao.exam;
 
 import com.ssm.domain.exam.SelectProblem;
 import com.ssm.domain.exam.SelectProblemWithBLOBs;
+import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
+import java.util.List;
+@Repository(value="SelectProblemDao")
 public interface SelectProblemDao {
     /**
      * ID 删除
@@ -45,4 +49,15 @@ public interface SelectProblemDao {
     int updateByPrimaryKeyWithBLOBs(SelectProblemWithBLOBs record);
 
     int updateByPrimaryKey(SelectProblem record);
+    /**
+     * 获取信息条数
+     * @return
+     */
+    int getTotalCount();
+    /**
+     * 获取指定页数数据
+     * @param paraMap
+     * @return
+     */
+    List<SelectProblemWithBLOBs> getLimitList(HashMap<String,Object> paraMap);
 }

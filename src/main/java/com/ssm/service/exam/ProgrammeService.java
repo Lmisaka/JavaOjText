@@ -1,35 +1,33 @@
 package com.ssm.service.exam;
 
+import com.ssm.dao.exam.ProgrammeDao;
+import com.ssm.domain.exam.BlankProblem;
 import com.ssm.domain.exam.ProblemEntity;
+import com.ssm.domain.exam.ProgrammeWithBLOBs;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by OvO on 2017/4/5.
  */
-public interface ProgrammeService {
-//    int insert(ProgrammeWithBLOBs record);
-//
-//    ProgrammeWithBLOBs selectById(Integer id);
-//
-//    ProgrammeWithBLOBs selectByKeyWord(String keyWord);
-//
-//    int updateByPrimaryKey(ProgrammeWithBLOBs record);
-//
-//    int deleteByPrimaryKey(Integer id);
-    /**
-     * 插入新的题
-     *
-     * @param record
-     * @return
-     */
-    int insert(ProblemEntity record);
+@Service
+public class ProgrammeService implements ProblemService {
+    @SuppressWarnings("SpringJavaAutowiringInspection")
+    @Autowired
+    private ProgrammeDao programmeDao;
 
-    /**
-     * 通过自增ID查询
-     *
-     * @param id
-     * @return
-     */
-    ProblemEntity selectById(Integer id);
+    
+    public int insert(ProblemEntity record) {
+        return programmeDao.insert((ProgrammeWithBLOBs) record);
+    }
+
+    
+    public ProblemEntity selectById(Integer id) {
+        return programmeDao.selectByPrimaryKey(id);
+    }
 
     /**
      * 通过关键字查询
@@ -37,15 +35,52 @@ public interface ProgrammeService {
      * @param keyWord
      * @return
      */
-    ProblemEntity selectByKeyWorld(String keyWord);
+    
+    public ProblemEntity selectByKeyWorld(String keyWord) {
+        return null;
+    }
 
-    int updateByPrimaryKeySelective(ProblemEntity record);
+    
+    public int updateByPrimaryKeySelective(ProblemEntity record) {
+        return 0;
+    }
 
+    public ProblemEntity selectByKeyWord(String keyWord) {
+        return programmeDao.selectByKeyWord(keyWord);
+    }
+
+    public int updateByPrimaryKey(ProblemEntity record) {
+        return programmeDao.updateByPrimaryKeySelective((ProgrammeWithBLOBs)record);
+    }
+
+    
+    public int deleteByPrimaryKey(Integer id) {
+        return programmeDao.deleteByPrimaryKey(id);
+    }
+
+    
+    public List<BlankProblem> selectAll() {
+        return null;
+    }
 
     /**
-     * 通过ID进行删除
-     * @param id
+     * 获取信息条数
+     *
      * @return
      */
-    int deleteByPrimaryKey(Integer id);
+    
+    public int getTotalCount() {
+        return  programmeDao.getTotalCount();
+    }
+
+    /**
+     * 获取指定页数数据
+     *
+     * @param paraMap
+     * @return
+     */
+    
+    public List<ProblemEntity> getLimitList(HashMap<String, Object> paraMap) {
+        return null;
+    }
 }

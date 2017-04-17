@@ -1,78 +1,90 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ssm.dao.exam.BlankProblemDao" >
-  <resultMap id="BaseResultMap" type="com.ssm.domain.exam.BlankProblem" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.ssm.domain.exam.BlankProblem" extends="BaseResultMap" >
-    <result column="blank_detail" property="blankDetail" jdbcType="LONGVARCHAR" />
-    <result column="key_word" property="keyWord" jdbcType="LONGVARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
+<mapper namespace="com.ssm.dao.exam.BlankProblemDao">
+    <resultMap id="BaseResultMap" type="com.ssm.domain.exam.BlankProblem">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.ssm.domain.exam.BlankProblem" extends="BaseResultMap">
+        <result column="blank_detail" property="blankDetail" jdbcType="LONGVARCHAR"/>
+        <result column="key_word" property="keyWord" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
     id
   </sql>
-  <sql id="Blob_Column_List" >
+    <sql id="Blob_Column_List">
     blank_detail, key_word
   </sql>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from blank_problem
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from blank_problem
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from blank_problem
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.ssm.domain.exam.BlankProblem" >
+    <insert id="insert" parameterType="com.ssm.domain.exam.BlankProblem">
     insert into blank_problem (id, blank_detail, key_word
       )
     values (#{id,jdbcType=INTEGER}, #{blankDetail,jdbcType=LONGVARCHAR}, #{keyWord,jdbcType=LONGVARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.ssm.domain.exam.BlankProblem" >
-    insert into blank_problem
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="blankDetail != null" >
-        blank_detail,
-      </if>
-      <if test="keyWord != null" >
-        key_word,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="blankDetail != null" >
-        #{blankDetail,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="keyWord != null" >
-        #{keyWord,jdbcType=LONGVARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.ssm.domain.exam.BlankProblem" >
-    update blank_problem
-    <set >
-      <if test="blankDetail != null" >
-        blank_detail = #{blankDetail,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="keyWord != null" >
-        key_word = #{keyWord,jdbcType=LONGVARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ssm.domain.exam.BlankProblem" >
+    <insert id="insertSelective" parameterType="com.ssm.domain.exam.BlankProblem">
+        insert into blank_problem
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="blankDetail != null">
+                blank_detail,
+            </if>
+            <if test="keyWord != null">
+                key_word,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="blankDetail != null">
+                #{blankDetail,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="keyWord != null">
+                #{keyWord,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.ssm.domain.exam.BlankProblem">
+        update blank_problem
+        <set>
+            <if test="blankDetail != null">
+                blank_detail = #{blankDetail,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="keyWord != null">
+                key_word = #{keyWord,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ssm.domain.exam.BlankProblem">
     update blank_problem
     set blank_detail = #{blankDetail,jdbcType=LONGVARCHAR},
       key_word = #{keyWord,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+    <select id="selectAll" resultMap="ResultMapWithBLOBs">
+        SELECT * FROM blank_problem
+  </select>
+    <select id="getTotalCount" resultType="int">
+    SELECT COUNT(1) FROM  blank_problem
+  </select>
+    <select id="getLimitList" resultMap="ResultMapWithBLOBs" parameterType="map">
+        SELECT<include refid="Base_Column_List"/>,
+        <include refid="Blob_Column_List"/>
+        FROM blank_problem
+        ORDER BY id DESC limit #{start},#{limit}
+    </select>
 </mapper>

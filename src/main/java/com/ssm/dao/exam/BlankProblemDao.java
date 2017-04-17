@@ -1,7 +1,11 @@
 package com.ssm.dao.exam;
 
 import com.ssm.domain.exam.BlankProblem;
+import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
+import java.util.List;
+@Repository(value="BlankProblemDao")
 public interface BlankProblemDao {
     /**
      * 通过ID删除
@@ -41,4 +45,19 @@ public interface BlankProblemDao {
      * @return
      */
     BlankProblem selectByKeyWorld(String keyWord);
+
+    List<BlankProblem> selectAll();
+
+    /**
+     * 获取信息条数
+     * @return
+     */
+    int getTotalCount();
+
+    /**
+     * 获取指定页数数据
+     * @param paraMap
+     * @return
+     */
+    List<BlankProblem> getLimitList(HashMap<String,Object> paraMap);
 }
