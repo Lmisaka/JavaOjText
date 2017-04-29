@@ -3,6 +3,14 @@ package com.ssm.domain.exam;
 public class SelectProblem implements ProblemEntity {
     private Integer id;
 
+    @Override
+    public String toString() {
+        return "SelectProblem{" +
+                "id=" + id +
+                ", correct=" + correct +
+                '}';
+    }
+
     private Integer correct;
 
     public Integer getId() {

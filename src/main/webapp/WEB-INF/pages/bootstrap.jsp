@@ -9,164 +9,23 @@
     <link href="../../resources/css/bootstrap.css" rel="stylesheet" type="text/css"/>
     <script src="../../resources/js/jquery-1.9.0.min.js" type="text/javascript"></script>
     <script src="../../resources/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="../../resources/js/exam/add.js" type="text/javascript"></script>
+    <script src="../../resources/js/exam/select.js" type="text/javascript"></script>
 </head>
 <body>
 <script language="JavaScript">
-    function selectSubmit() {
-        if (!$('#A').is(':checked') && !$('#B').is(':checked') && !$('#C').is(':checked') && !$('#D').is(':checked')) {
-            alert("请勾选答案");
-            return false;
-        }
-        if ("" == $('#selectDetail').val()) {
-            alert("请输入问题描述");
-            return false;
-        }
-        if ("" == $('#selectA').val() || "" == $('#selectB').val() || "" == $('#selectC').val() || "" == $('#selectD').val()) {
-            alert("请输入选项");
-            return false;
-        }
-        var correct = 0;
-        if ($('#A').is(':checked'))
-            correct += 8;
-        if ($('#B').is(':checked'))
-            correct += 4;
-        if ($('#C').is(':checked'))
-            correct += 2;
-        if ($('#D').is(':checked'))
-            correct += 1;
-        var data = {
-            "selectDetail": $('#selectDetail').val(),
-            "selectA": $('#selectA').val(),
-            "selectB": $('#selectB').val(),
-            "selectC": $('#selectC').val(),
-            "selectD": $('#selectD').val(),
-            correct: correct
-        };
-        $.ajax({
-            type: 'post',
-            url: '/add/select',
-            contentType: 'application/json;charset=UTF-8',
-            dataType: 'json',
-            async: false,
-            data: JSON.stringify(data),
-            success: function (data) {
-                if (data.result == "success") {
-                    alert("success");
-                    window.location.reload(true);
-                } else {
-                    alert("error");
-                }
-            },
-            error: function () {
-                alert("提交失败");
-            }
+    $(document).ready(function () {
+        console.log("+++++++++++++++++++++++++++++++++");
+        getPage(1);
+        getSelectPage(1);
+        $('#problemSelect').on("change", function () {
+            console.log($('#problemSelect').val());
+            getPage($('#problemSelect').val());
         });
-    }
-    function blankSubmit() {
-        if ("" == $('#blankDetail').val()) {
-            alert("请输入问题描述");
-            return false;
-        }
-        if ("" == $('#keyWord').val()) {
-            alert("请输入关键字");
-            return false;
-        }
-        var data = {
-            "blankDetail": $('#blankDetail').val(),
-            "keyWord": $('#keyWord').val()
-        };
-        $.ajax({
-            type: 'post',
-            url: '/add/blank',
-            contentType: 'application/json;charset=UTF-8',
-            dataType: 'json',
-            async: false,
-            data: JSON.stringify(data),
-            success: function (data) {
-                if (data.result == "success") {
-                    alert("success");
-                    window.location.reload(true);
-                } else {
-                    alert("error");
-                }
-            },
-            error: function () {
-                alert("提交失败");
-            }
-        });
-    }
-    function programmeSubmit() {
-        if ("" == $('#programmeDetail').val()) {
-            alert("请输入问题描述");
-            return false;
-        }
-        if ("" == $('#output').val()) {
-            alert("请输入预期输出");
-            return false;
-        }
-        if ("" == $('#inputLimitTime').val()) {
-            alert("请输入时间限制");
-            return false;
-        }
-        var data = {
-            "detail": $('#programmeDetail').val(),
-            "output": $('#output').val(),
-            timeLimit:$('#inputLimitTime').val()
-        };
-        $.ajax({
-            type: 'post',
-            url: '/add/programme',
-            contentType: 'application/json;charset=UTF-8',
-            dataType: 'json',
-            async: false,
-            data: JSON.stringify(data),
-            success: function (data) {
-                if (data.result == "success") {
-                    alert("success");
-                    window.location.reload(true);
-                } else {
-                    alert("error");
-                }
-            },
-            error: function () {
-                alert("提交失败");
-            }
-        });
-    }
-    function unprogrammeSubmit() {
-        if ("" == $('#unProgrammeDetail').val()) {
-            alert("请输入问题描述");
-            return false;
-        }
-        if ("" == $('#unProgrammeAnswer').val()) {
-            alert("请输入关键字");
-            return false;
-        }
-        var data = {
-            "detail": $('#unProgrammeDetail').val(),
-            "answer": $('#unProgrammeAnswer').val()
-        };
-        $.ajax({
-            type: 'post',
-            url: '/add/unprogramme',
-            contentType: 'application/json;charset=UTF-8',
-            dataType: 'json',
-            async: false,
-            data: JSON.stringify(data),
-            success: function (data) {
-                if (data.result == "success") {
-                    alert("success");
-                    window.location.reload(true);
-                } else {
-                    alert("error");
-                }
-            },
-            error: function () {
-                alert("提交失败");
-            }
-        });
-    }
+    });
 </script>
+<script type="pageNum" id="pageNum"></script>
+<script type="getId" id="problemId"></script>
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span12">
@@ -244,10 +103,10 @@
             </div>
             <div class="tabbable tabs-left" id="tabs-483381">
                 <ul class="nav nav-tabs">
-                    <li>
+                    <li class="active">
                         <a data-toggle="tab" href="#panel-956299">查看</a>
                     </li>
-                    <li class="active">
+                    <li>
                         <a data-toggle="tab" href="#panel-802227">选择题</a>
                     </li>
                     <li>
@@ -261,135 +120,172 @@
                     </li>
                 </ul>
                 <div class="tab-content">
+                    <%--查看--%>
+                    <div class="tab-pane active" id="panel-956299">
+                        <div id="table">
+                            <table class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th>题号</th>
+                                    <th>
+                                        <div class="form-group">
+                                            <select id="problemSelect">
+                                                <option selected="selected" value="1" id="1">选择题</option>
+                                                <option value="2" id="2">填空题</option>
+                                                <option value="3" id="3">编程题</option>
+                                                <option value="4" id="4">非编程题</option>
+                                            </select>
+                                        </div>
+                                    </th>
+                                    <th>修改</th>
+                                    <th>删除</th>
+                                </tr>
+                                </thead>
+                                <tbody class="problemTable">
+                                </tbody>
+                            </table>
+                            <div class="pagination pagination-centered">
+                                <%--分页按钮--%>
+                                <ul class="pageButton">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                     <%--选择题--%>
-                    <div class="tab-pane active" id="panel-802227">
-                        <form class="form-horizontal" onsubmit="return selectSubmit()" action="" method="post">
-                            <div class="control-group">
-                                <label class="control-label" for="selectDetail">题目描述：</label>
-                                <div class="controls">
-                                    <textarea cols="50" id="selectDetail" name="selectDetail" rows="5"></textarea>
+                    <div class="tab-pane" id="panel-802227">
+                        <form class="form-horizontal" id="selectForm" onsubmit="return selectSubmit()" action=""
+                              method="post">
+                            <div id="selectDiv">
+                                <div class="control-group">
+                                    <label class="control-label" for="selectDetail">题目描述：</label>
+                                    <div class="controls">
+                                        <textarea cols="50" id="selectDetail" name="selectDetail" rows="5"></textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="selectA">A</label>
-                                <div class="controls">
-                                    <input id="A" name="answer" type="checkbox" value="8"/>
-                                    <input id="selectA" name="selectA" type="text"/>
+                                <div class="control-group">
+                                    <label class="control-label" for="selectA">A</label>
+                                    <div class="controls">
+                                        <input id="A" name="answer" type="checkbox" value="8"/>
+                                        <input id="selectA" name="selectA" type="text"/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="selectB">B</label>
-                                <div class="controls">
-                                    <input id="B" name="answer" type="checkbox" value="4"/>
-                                    <input id="selectB" name="selectB" type="text"/>
+                                <div class="control-group">
+                                    <label class="control-label" for="selectB">B</label>
+                                    <div class="controls">
+                                        <input id="B" name="answer" type="checkbox" value="4"/>
+                                        <input id="selectB" name="selectB" type="text"/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="selectC">C</label>
-                                <div class="controls">
-                                    <input id="C" name="answer" type="checkbox" value="2"/>
-                                    <input id="selectC" name="selectC" type="text"/>
+                                <div class="control-group">
+                                    <label class="control-label" for="selectC">C</label>
+                                    <div class="controls">
+                                        <input id="C" name="answer" type="checkbox" value="2"/>
+                                        <input id="selectC" name="selectC" type="text"/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="selectD">D</label>
-                                <div class="controls">
-                                    <input id="D" name="answer" type="checkbox" value="1"/>
-                                    <input id="selectD" name="selectD" type="text"/>
+                                <div class="control-group">
+                                    <label class="control-label" for="selectD">D</label>
+                                    <div class="controls">
+                                        <input id="D" name="answer" type="checkbox" value="1"/>
+                                        <input id="selectD" name="selectD" type="text"/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="control-group">
-                                <div class="controls">
-                                    <label class="checkbox">
-                                        <input class="btn" type="submit"/>
-                                    </label>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <label class="checkbox">
+                                            <input class="btn" type="submit"/>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         </form>
                     </div>
-                    <%--查看--%>
-                    <div class="tab-pane" id="panel-956299">
-                        <p>
-                            查看
-                        </p>
-                    </div>
                     <%--编程题--%>
                     <div class="tab-pane" id="panel-123456">
-                        <form class="form-horizontal" method="post" action="" onsubmit="return programmeSubmit()">
-                            <div class="control-group">
-                                <label class="control-label" for="programmeDetail">题目描述：</label>
-                                <div class="controls">
-                                    <textarea cols="50" id="programmeDetail" rows="5"></textarea>
+                        <form class="form-horizontal" id="programmeForm" method="post" action=""
+                              onsubmit="return programmeSubmit()">
+                            <div id="programmeDiv">
+                                <div class="control-group">
+                                    <label class="control-label" for="programmeDetail">题目描述：</label>
+                                    <div class="controls">
+                                        <textarea cols="50" id="programmeDetail" rows="5"></textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="output">预期输出：</label>
-                                <div class="controls">
-                                    <textarea cols="50" id="output" rows="5"></textarea>
+                                <div class="control-group">
+                                    <label class="control-label" for="output">预期输出：</label>
+                                    <div class="controls">
+                                        <textarea cols="50" id="output" rows="5"></textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="inputLimitTime">时间限制</label>
-                                <div class="controls">
-                                    <input id="inputLimitTime" type="text"
-                                           ōnkeyup="this.value=this.value.replace(/\D/g,'''')"
-                                           ōnafterpaste="this.value=this.value.replace(/\D/g,'''')"/>
+                                <div class="control-group">
+                                    <label class="control-label" for="inputLimitTime">时间限制</label>
+                                    <div class="controls">
+                                        <input id="inputLimitTime" type="text"
+                                               ōnkeyup="this.value=this.value.replace(/\D/g,'''')"
+                                               ōnafterpaste="this.value=this.value.replace(/\D/g,'''')"/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="control-group">
-                                <div class="controls">
-                                    <label class="checkbox">
-                                        <button class="btn" type="submit">提交</button>
-                                    </label>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <label class="checkbox">
+                                            <button class="btn" type="submit">提交</button>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <%--填空题--%>
                     <div class="tab-pane" id="panel-985314">
-                        <form class="form-horizontal" method="post" action="" onsubmit="return blankSubmit()">
-                            <div class="control-group">
-                                <label class="control-label" for="blankDetail">题目描述：</label>
-                                <div class="controls">
-                                    <textarea cols="50" id="blankDetail" rows="5"></textarea>
+                        <form class="form-horizontal" id="blankForm" method="post" action=""
+                              onsubmit="return blankSubmit()">
+                            <div id="blankDiv">
+                                <div class="control-group">
+                                    <label class="control-label" for="blankDetail">题目描述：</label>
+                                    <div class="controls">
+                                        <textarea cols="50" id="blankDetail" rows="5"></textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="keyWord">关键词</label>
-                                <div class="controls">
-                                    <p>关键字请用,(英文字符)隔开</p>
-                                    <input id="keyWord" type="text"/>
+                                <div class="control-group">
+                                    <label class="control-label" for="keyWord">关键词</label>
+                                    <div class="controls">
+                                        <p>关键字请用,(英文字符)隔开</p>
+                                        <input id="keyWord" type="text"/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="control-group">
-                                <div class="controls">
-                                    <label class="checkbox">
-                                        <button class="btn" type="submit">提交</button>
-                                    </label>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <label class="checkbox">
+                                            <button class="btn" type="submit">提交</button>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <%--非编程题--%>
                     <div class="tab-pane" id="panel-654321">
-                        <form class="form-horizontal" method="post" action="" onsubmit="return unprogrammeSubmit()">
-                            <div class="control-group">
-                                <label class="control-label" for="unProgrammeDetail">题目描述：</label>
-                                <div class="controls">
-                                    <textarea cols="50" id="unProgrammeDetail" rows="5"></textarea>
+                        <form class="form-horizontal" id="unProgrammeForm" method="post" action=""
+                              onsubmit="return unprogrammeSubmit()">
+                            <div id="unProgrammeDiv">
+                                <div class="control-group">
+                                    <label class="control-label" for="unProgrammeDetail">题目描述：</label>
+                                    <div class="controls">
+                                        <textarea cols="50" id="unProgrammeDetail" rows="5"></textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="control-group">
-                                <label class="control-label" for="unProgrammeAnswer">答案：</label>
-                                <div class="controls">
-                                    <textarea cols="50" id="unProgrammeAnswer" rows="5"></textarea>
+                                <div class="control-group">
+                                    <label class="control-label" for="unProgrammeAnswer">答案：</label>
+                                    <div class="controls">
+                                        <textarea cols="50" id="unProgrammeAnswer" rows="5"></textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="control-group">
-                                <div class="controls">
-                                    <label class="checkbox">
-                                        <button class="btn" type="submit">提交</button>
-                                    </label>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <label class="checkbox">
+                                            <button class="btn" type="submit">提交</button>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         </form>

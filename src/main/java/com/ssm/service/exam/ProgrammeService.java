@@ -4,6 +4,7 @@ import com.ssm.dao.exam.ProgrammeDao;
 import com.ssm.domain.exam.BlankProblem;
 import com.ssm.domain.exam.ProblemEntity;
 import com.ssm.domain.exam.ProgrammeWithBLOBs;
+import com.ssm.service.exam.total.ProblemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,16 +16,15 @@ import java.util.List;
  */
 @Service
 public class ProgrammeService implements ProblemService {
-    @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
     private ProgrammeDao programmeDao;
 
-    
+    @Override
     public int insert(ProblemEntity record) {
         return programmeDao.insert((ProgrammeWithBLOBs) record);
     }
 
-    
+    @Override
     public ProblemEntity selectById(Integer id) {
         return programmeDao.selectByPrimaryKey(id);
     }
@@ -35,14 +35,14 @@ public class ProgrammeService implements ProblemService {
      * @param keyWord
      * @return
      */
-    
+    @Override
     public ProblemEntity selectByKeyWorld(String keyWord) {
         return null;
     }
 
-    
+    @Override
     public int updateByPrimaryKeySelective(ProblemEntity record) {
-        return 0;
+        return programmeDao.updateByPrimaryKeySelective((ProgrammeWithBLOBs) record);
     }
 
     public ProblemEntity selectByKeyWord(String keyWord) {
@@ -50,15 +50,26 @@ public class ProgrammeService implements ProblemService {
     }
 
     public int updateByPrimaryKey(ProblemEntity record) {
-        return programmeDao.updateByPrimaryKeySelective((ProgrammeWithBLOBs)record);
+        return programmeDao.updateByPrimaryKeySelective((ProgrammeWithBLOBs) record);
     }
 
-    
+    @Override
     public int deleteByPrimaryKey(Integer id) {
         return programmeDao.deleteByPrimaryKey(id);
     }
 
-    
+    /**
+     * 获取指定页面问题描述中的子串
+     *
+     * @param paraMap
+     * @return
+     */
+    @Override
+    public List<HashMap<String, String>> getSubStrLimitList(HashMap<String, Object> paraMap) {
+        return programmeDao.getSubStrLimitList(paraMap);
+    }
+
+
     public List<BlankProblem> selectAll() {
         return null;
     }
@@ -68,9 +79,9 @@ public class ProgrammeService implements ProblemService {
      *
      * @return
      */
-    
+    @Override
     public int getTotalCount() {
-        return  programmeDao.getTotalCount();
+        return programmeDao.getTotalCount();
     }
 
     /**
@@ -79,8 +90,9 @@ public class ProgrammeService implements ProblemService {
      * @param paraMap
      * @return
      */
-    
-    public List<ProblemEntity> getLimitList(HashMap<String, Object> paraMap) {
-        return null;
+
+    public List<ProgrammeWithBLOBs> getLimitList(HashMap<String, Object> paraMap) {
+        return programmeDao.getLimitList(paraMap);
     }
+
 }

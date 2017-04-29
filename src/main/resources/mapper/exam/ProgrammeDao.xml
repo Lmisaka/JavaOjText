@@ -24,13 +24,16 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="getTotalCount" resultType="int">
-    SELECT COUNT(1) FROM  blank_problem
+    SELECT COUNT(1) FROM  programme_problem
   </select>
   <select id="getLimitList" resultMap="ResultMapWithBLOBs" parameterType="map">
     SELECT<include refid="Base_Column_List"/>,
     <include refid="Blob_Column_List"/>
     FROM programme_problem
     ORDER BY id DESC limit #{start},#{limit}
+  </select>
+  <select id="getSubStrLimitList" resultType="java.util.HashMap" parameterType="map">
+    SELECT id,LEFT(detail,25) AS detail FROM programme_problem ORDER BY id ASC limit #{start},#{limit}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from programme_problem

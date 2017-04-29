@@ -27,13 +27,16 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="getTotalCount" resultType="int">
-    SELECT COUNT(1) FROM  blank_problem
+    SELECT COUNT(1) FROM  select_problem
   </select>
   <select id="getLimitList" resultMap="ResultMapWithBLOBs" parameterType="map">
     SELECT<include refid="Base_Column_List"/>,
     <include refid="Blob_Column_List"/>
     FROM select_problem
     ORDER BY id DESC limit #{start},#{limit}
+  </select>
+  <select id="getSubStrLimitList" resultType="java.util.HashMap" parameterType="map">
+    SELECT id,LEFT(detail,25) AS detail FROM select_problem ORDER BY id ASC limit #{start},#{limit}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from select_problem
@@ -103,7 +106,7 @@
         correct = #{correct,jdbcType=INTEGER},
       </if>
       <if test="selectDetail != null" >
-        detail = #{detail,jdbcType=LONGVARCHAR},
+        detail = #{selectDetail,jdbcType=LONGVARCHAR},
       </if>
       <if test="selectA != null" >
         select_a = #{selectA,jdbcType=LONGVARCHAR},
@@ -123,7 +126,7 @@
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ssm.domain.exam.SelectProblemWithBLOBs" >
     update select_problem
     set correct = #{correct,jdbcType=INTEGER},
-      detail = #{detail,jdbcType=LONGVARCHAR},
+      detail = #{selectDetail,jdbcType=LONGVARCHAR},
       select_a = #{selectA,jdbcType=LONGVARCHAR},
       select_b = #{selectB,jdbcType=LONGVARCHAR},
       select_c = #{selectC,jdbcType=LONGVARCHAR},

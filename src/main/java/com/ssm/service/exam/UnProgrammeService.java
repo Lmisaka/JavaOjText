@@ -4,6 +4,7 @@ import com.ssm.dao.exam.UnprogrammeDao;
 import com.ssm.domain.exam.BlankProblem;
 import com.ssm.domain.exam.ProblemEntity;
 import com.ssm.domain.exam.Unprogramme;
+import com.ssm.service.exam.total.ProblemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,16 +16,15 @@ import java.util.List;
  */
 @Service
 public class UnProgrammeService implements ProblemService {
-    @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
     private UnprogrammeDao unprogrammeDao;
 
-
+    @Override
     public int insert(ProblemEntity record) {
         return unprogrammeDao.insert((Unprogramme) record);
     }
 
-
+    @Override
     public ProblemEntity selectById(Integer id) {
         return unprogrammeDao.selectByPrimaryKey(id);
     }
@@ -35,12 +35,12 @@ public class UnProgrammeService implements ProblemService {
      * @param keyWord
      * @return
      */
-
+    @Override
     public ProblemEntity selectByKeyWorld(String keyWord) {
         return unprogrammeDao.selectByKeyWord(keyWord);
     }
 
-
+    @Override
     public int updateByPrimaryKeySelective(ProblemEntity record) {
         return unprogrammeDao.updateByPrimaryKeySelective((Unprogramme) record);
     }
@@ -51,9 +51,20 @@ public class UnProgrammeService implements ProblemService {
      * @param id
      * @return
      */
-
+    @Override
     public int deleteByPrimaryKey(Integer id) {
         return unprogrammeDao.deleteByPrimaryKey(id);
+    }
+
+    /**
+     * 获取指定页面问题描述中的子串
+     *
+     * @param paraMap
+     * @return
+     */
+    @Override
+    public List<HashMap<String, String>> getSubStrLimitList(HashMap<String, Object> paraMap) {
+        return unprogrammeDao.getSubStrLimitList(paraMap);
     }
 
 
@@ -66,7 +77,7 @@ public class UnProgrammeService implements ProblemService {
      *
      * @return
      */
-
+    @Override
     public int getTotalCount() {
         return unprogrammeDao.getTotalCount();
     }
@@ -78,7 +89,7 @@ public class UnProgrammeService implements ProblemService {
      * @return
      */
 
-    public List<ProblemEntity> getLimitList(HashMap<String, Object> paraMap) {
-        return null;
+    public List<Unprogramme> getLimitList(HashMap<String, Object> paraMap) {
+        return unprogrammeDao.getLimitList(paraMap);
     }
 }

@@ -1,6 +1,9 @@
-package com.ssm.service.exam;
+package com.ssm.service.exam.total;
 
 import com.ssm.domain.exam.ProblemEntity;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * 所有service类实现的接口
@@ -49,4 +52,10 @@ public interface ProblemService {
      * @return
      */
     int deleteByPrimaryKey(Integer id);
+    /**
+     * 获取指定页面问题描述中的子串
+     * @param paraMap
+     * @return
+     */
+    List<HashMap<String,String>> getSubStrLimitList(HashMap<String,Object> paraMap);
 }

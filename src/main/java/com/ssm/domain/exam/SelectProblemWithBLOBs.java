@@ -13,7 +13,7 @@ public class SelectProblemWithBLOBs extends SelectProblem {
 
     @Override
     public String toString() {
-        return "SelectProblemWithBLOBs{" +
+        return super.toString() + "SelectProblemWithBLOBs{" +
                 "selectDetail='" + selectDetail + '\'' +
                 ", selectA='" + selectA + '\'' +
                 ", selectB='" + selectB + '\'' +

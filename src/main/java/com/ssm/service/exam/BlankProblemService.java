@@ -3,6 +3,7 @@ package com.ssm.service.exam;
 import com.ssm.dao.exam.BlankProblemDao;
 import com.ssm.domain.exam.BlankProblem;
 import com.ssm.domain.exam.ProblemEntity;
+import com.ssm.service.exam.total.ProblemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,30 +15,30 @@ import java.util.List;
  */
 @Service
 public class BlankProblemService implements ProblemService {
-    @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
     private BlankProblemDao blankProblemDao;
 
+    @Override
     public int insert(ProblemEntity record) {
         return blankProblemDao.insert((BlankProblem) record);
     }
 
-
+    @Override
     public ProblemEntity selectById(Integer id) {
         return blankProblemDao.selectByPrimaryKey(id);
     }
 
-
+    @Override
     public ProblemEntity selectByKeyWorld(String keyWord) {
         return blankProblemDao.selectByKeyWorld(keyWord);
     }
 
-
+    @Override
     public int updateByPrimaryKeySelective(ProblemEntity record) {
         return blankProblemDao.updateByPrimaryKeySelective((BlankProblem) record);
     }
 
-
+    @Override
     public int deleteByPrimaryKey(Integer id) {
         return blankProblemDao.deleteByPrimaryKey(id);
     }
@@ -53,7 +54,7 @@ public class BlankProblemService implements ProblemService {
      *
      * @return
      */
-
+    @Override
     public int getTotalCount() {
         return blankProblemDao.getTotalCount();
     }
@@ -64,8 +65,16 @@ public class BlankProblemService implements ProblemService {
      * @param paraMap
      * @return
      */
+    public List<BlankProblem> getLimitList(HashMap<String, Object> paraMap) {
+        return blankProblemDao.getLimitList(paraMap);
+    }
 
-    public List<ProblemEntity> getLimitList(HashMap<String, Object> paraMap) {
-        return null;
+    /**
+     * 获取指定页的id和detail
+     * @param paraMap
+     * @return
+     */
+    public List<HashMap<String,String>> getSubStrLimitList(HashMap<String, Object> paraMap){
+        return blankProblemDao.getSubStrLimitList(paraMap);
     }
 }

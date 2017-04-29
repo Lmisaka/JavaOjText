@@ -65,4 +65,10 @@ public interface UnprogrammeDao {
      * @return
      */
     List<Unprogramme> getLimitList(HashMap<String, Object> paraMap);
+    /**
+     * 获取指定页面问题描述中的子串
+     * @param paraMap
+     * @return
+     */
+    List<HashMap<String,String>> getSubStrLimitList(HashMap<String,Object> paraMap);
 }
