@@ -21,6 +21,6 @@ public class MainContorller {
 
     @RequestMapping(value = "/text")
     public String text() {
-        return "bootstrap";
+        return "IsMyWriteHtml";
     }
 }

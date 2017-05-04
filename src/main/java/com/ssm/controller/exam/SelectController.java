@@ -11,6 +11,7 @@ import com.ssm.service.exam.UnProgrammeService;
 import com.ssm.service.exam.total.ProblemService;
 import com.ssm.util.Pager;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,35 +50,44 @@ public class SelectController {
      */
     @RequestMapping(value = "pageCount/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public Integer getPageCount(@PathVariable("id") Integer id) {
+    public JSONObject getPageCount(@PathVariable("id") Integer id) {
+        JSONObject json = new JSONObject();
         int count = 0;
         switch (id) {
             case 1: {
                 Pager<SelectProblemWithBLOBs> pager = new Pager<>();
                 count = selectProblemService.getTotalCount();
                 pager.setTotalCount(count);
-                return pager.getTotalPage();
+                json.put("count", count);
+                json.put("page", pager.getTotalPage());
+                return json;
             }
             case 2: {
                 Pager<BlankProblem> pager = new Pager<>();
                 count = blankProblemService.getTotalCount();
                 pager.setTotalCount(count);
-                return pager.getTotalPage();
+                json.put("count", count);
+                json.put("page", pager.getTotalPage());
+                return json;
             }
             case 3: {
                 Pager<ProgrammeWithBLOBs> pager = new Pager<>();
                 count = programmeService.getTotalCount();
                 pager.setTotalCount(count);
-                return pager.getTotalPage();
+                json.put("count", count);
+                json.put("page", pager.getTotalPage());
+                return json;
             }
             case 4: {
                 Pager<Unprogramme> pager = new Pager<>();
                 count = unProgrammeService.getTotalCount();
                 pager.setTotalCount(count);
-                return pager.getTotalPage();
+                json.put("count", count);
+                json.put("page", pager.getTotalPage());
+                return json;
             }
             default:
-                return 0;
+                return null;
         }
     }
 
@@ -119,12 +129,11 @@ public class SelectController {
         paraMap.put("limit", Pager.PAGE_SIZE);
         List<HashMap<String, String>> jsonResult = selectProblemService.getSubStrLimitList(paraMap);
         JSONArray json = JSONArray.fromObject(jsonResult);
-        System.out.println(json);
         return json;
     }
 
     /**
-     * 添加编程题
+     * 获取指定页面的题目信息
      *
      * @param page
      * @return
@@ -140,7 +149,6 @@ public class SelectController {
         paraMap.put("limit", Pager.PAGE_SIZE);
         List<HashMap<String, String>> jsonResult = programmeService.getSubStrLimitList(paraMap);
         JSONArray json = JSONArray.fromObject(jsonResult);
-
         return json;
     }
 
@@ -164,7 +172,13 @@ public class SelectController {
         return json;
     }
 
-
+    /**
+     * 获取指定类型的指定ID的题目信息
+     *
+     * @param ProblemId
+     * @param id
+     * @return
+     */
     @RequestMapping("/getId/{ProblemId}/{id}")
     @ResponseBody
     public JSONArray selectById(@PathVariable("ProblemId") Integer ProblemId, @PathVariable("id") Integer id) {
@@ -173,16 +187,15 @@ public class SelectController {
                 JSONArray json = getEntityFromId(selectProblemService, id);
                 return json;
             }
-            case 2:
-            {
+            case 2: {
                 JSONArray json = getEntityFromId(blankProblemService, id);
                 return json;
             }
-            case 3:{
+            case 3: {
                 JSONArray json = getEntityFromId(programmeService, id);
                 return json;
             }
-            case 4:{
+            case 4: {
                 JSONArray json = getEntityFromId(unProgrammeService, id);
                 return json;
             }
@@ -192,7 +205,31 @@ public class SelectController {
     }
 
     private JSONArray getEntityFromId(ProblemService problemService, Integer id) {
-        JSONArray json = JSONArray.fromObject(problemService.selectById(id));
+        JSONArray json = new JSONArray();
+        if (problemService.selectById(id) != null) {
+            json = JSONArray.fromObject(problemService.selectById(id));
+        } else {
+            json.add("false");
+        }
         return json;
     }
+
+//    @RequestMapping(value = "getProblemCount/{type}", method = RequestMethod.GET)
+//    @ResponseBody
+//    public Integer getProblemCount(@PathVariable("type") Integer type) {
+//        switch (type) {
+//            case 1: {
+//
+//            }
+//            case 2: {
+//
+//            }
+//            case 3: {
+//
+//            }
+//            case 4: {
+//
+//            }
+//        }
+//    }
 }
