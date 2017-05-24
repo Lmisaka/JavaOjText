@@ -8,12 +8,13 @@
   <resultMap id="ResultMapWithBLOBs" type="com.ssm.domain.exam.ProgrammeWithBLOBs" extends="BaseResultMap" >
     <result column="detail" property="detail" jdbcType="LONGVARCHAR" />
     <result column="out_put" property="output" jdbcType="LONGVARCHAR" />
+    <result column="text_case" property="textCase" jdbcType="LONGVARCHAR"/>
   </resultMap>
   <sql id="Base_Column_List" >
     id, time_limit
   </sql>
   <sql id="Blob_Column_List" >
-    detail, out_put
+    detail, out_put,text_case
   </sql>
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select 
@@ -41,9 +42,9 @@
   </delete>
   <insert id="insert" parameterType="com.ssm.domain.exam.ProgrammeWithBLOBs" >
     insert into programme_problem (id, time_limit, detail, 
-      out_put)
+      out_put,text_case)
     values (#{id,jdbcType=INTEGER}, #{timeLimit,jdbcType=INTEGER}, #{detail,jdbcType=LONGVARCHAR}, 
-      #{output,jdbcType=LONGVARCHAR})
+      #{output,jdbcType=LONGVARCHAR},#{textCase,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ssm.domain.exam.ProgrammeWithBLOBs" >
     insert into programme_problem
@@ -60,6 +61,9 @@
       <if test="output != null" >
         out_put,
       </if>
+      <if test="textCase != null" >
+        text_case,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -73,6 +77,9 @@
       </if>
       <if test="output != null" >
         #{output,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="textCase != null" >
+        #{texCase,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -88,6 +95,9 @@
       <if test="output != null" >
         out_put = #{output,jdbcType=LONGVARCHAR},
       </if>
+      <if test="textCase != null" >
+        text_case = #{texCase,jdbcType=LONGVARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -96,6 +106,7 @@
     set time_limit = #{timeLimit,jdbcType=INTEGER},
       detail = #{detail,jdbcType=LONGVARCHAR},
       out_put = #{output,jdbcType=LONGVARCHAR}
+      text_case = #{textCase,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ssm.domain.exam.Programme" >

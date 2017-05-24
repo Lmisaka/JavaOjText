@@ -1,7 +1,9 @@
 package com.ssm.dao.user;
 
 import com.ssm.domain.user.User;
+import org.springframework.stereotype.Repository;
 
+@Repository(value = "UserDao")
 public interface UserDao {
     int deleteByPrimaryKey(String username);
 
@@ -9,7 +11,7 @@ public interface UserDao {
 
     int insertSelective(User record);
 
-    User selectByPrimaryKey(String username);
+    String selectByPrimaryKey(String username);
 
     int updateByPrimaryKeySelective(User record);
 

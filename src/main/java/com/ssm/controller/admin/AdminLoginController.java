@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /**
@@ -24,14 +23,17 @@ import java.util.Map;
 public class AdminLoginController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    @RequestMapping(value = "/adminLogin")
+    public String adminLogin() {
+        return "adminLogin";
+    }
+
     @Autowired
     private AdminUserService adminUserService;
 
-    @RequestMapping(value = "/index")
-    public ModelAndView index(@RequestParam("username") String username, HttpSession session) {//这样可以获取到url?xxx=xxx的值
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    public ModelAndView index( ) {
         ModelAndView mav = new ModelAndView("adminIndex");
-        mav.addObject("username", username);
-        session.setAttribute("username", username);
         return mav;
     }
 
@@ -41,31 +43,20 @@ public class AdminLoginController {
      */
     @RequestMapping(value = "/login.do", method = RequestMethod.POST)
     @ResponseBody
-    public JSONObject login(@RequestBody AdminUser adminUser, Model model) {
+    public Map<String,Boolean> login(@RequestBody AdminUser adminUser, Model model) {
         //要返回的json数据
-        JSONObject json = new JSONObject();
-        ModelAndView mav = new ModelAndView();
-        Map<String, Object> result = new HashedMap();
-
+        Map<String, Boolean> result = new HashedMap();
         //验证账号是否存在
+        result.put("isSuccess", false);
         if ("".equals(adminUserService.getAdminUserByUsername(adminUser.getAdUsername())) || adminUserService.getAdminUserByUsername(adminUser.getAdUsername()) == null) {
-            json.put("result", "error");
-            mav.setViewName("adminLogin");
-            return json;
+            return result;
         }
-
         //密码匹配
         if (adminUserService.getAdminUserByUsername(adminUser.getAdUsername()).equals(adminUser.getAdPassword())) {
-            json.put("result", "success");
-            mav.setViewName("redirect:adminIndex");
-            mav.addObject("username", adminUser.getAdUsername());
-            model.addAttribute("username", adminUser.getAdUsername());
-            result.put("result", "success");
-            return json;
+            result.put("isSuccess", true);
+            return result;
         }
-        mav.setViewName("adminLogin");
-        result.put("result", "error");
-        return json;
+        return result;
     }
 
     @RequestMapping(value = "/textLogin.do", method = RequestMethod.POST)

@@ -21,29 +21,7 @@ $(function () {
         $('#switch_login').trigger('click');
     }
 });
-function login() {
-    //登陆ajax
-    var data = {
-        "username": $("#username").val(),
-        "password": $('#password').val(),
-        statis: 1
-    };
-    $.ajax({
-        type: 'POST',
-        url: '/user/login.do',
-        contentType: 'application/json;charset=UTF-8',
-        dataType: 'json',
-        data: JSON.stringify(data),
-        success: function (data) {
-            if (data.result == "success") {
-                alert("success");
-                window.location.href = "text";
-            } else {
-                alert("error");
-            }
-        },
-    });
-};
+
 function logintab() {
     scrollTo(0);
     $('#switch_qlogin').removeClass("switch_btn_focus").addClass('switch_btn');
@@ -73,9 +51,7 @@ function getParam(pname) {
     }
 }
 
-
-var reMethod = "GET",
-    pwdmin = 6;
+pwdmin = 6;
 
 $(document).ready(function () {
 
@@ -100,33 +76,35 @@ $(document).ready(function () {
             });
             $('#userCue').html("<font color='red'><b>×用户名位4-16字符</b></font>");
             return false;
-
         }
+
+        var data = {
+            "username": $('#user').val(),
+            "password": md5($('#passwd').val()),
+            "email":$('#email').val(),
+            "qqNumber": $('#qq').val(),
+            "telNumber": $('#tel').val()
+        };
         $.ajax({
-            type: reMethod,
-            url: "/member/ajaxyz.php",
-            data: "uid=" + $("#user").val() + '&temp=' + new Date(),
-            dataType: 'html',
+            type: 'post',
+            url: "/user/register.do",
+            data: JSON.stringify(data),
+            contentType: 'application/json;charset=UTF-8',
+            dataType: 'json',
+            async:false,
             success: function (result) {
-
-                if (result.length > 2) {
-                    $('#user').focus().css({
-                        border: "1px solid red",
-                        boxShadow: "0 0 2px red"
-                    });
-                    $("#userCue").html(result);
-                    return false;
-                } else {
-                    $('#user').css({
-                        border: "1px solid #D7D7D7",
-                        boxShadow: "none"
-                    });
+                if(result["isExist"]){
+                    alert("该用户已存在");
                 }
-
+                if(result["isSuccessFul"]){
+                    alert("注册成功");
+                    window.location.reload(true);
+                }
+            },
+            error:function () {
+                alert("error");
             }
         });
-
-
         if ($('#passwd').val().length < pwdmin) {
             $('#passwd').focus();
             $('#userCue').html("<font color='red'><b>×密码不能小于" + pwdmin + "位</b></font>");

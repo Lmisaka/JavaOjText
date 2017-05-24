@@ -1,21 +1,21 @@
-﻿<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+﻿<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%
     String path = request.getContextPath();
-    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>大气简洁后台登录模板下载</title>
+    <title>在线笔试答题</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <script type="text/javascript" src="../../resources/js/jquery-1.9.0.min.js"></script>
-    <script type="text/javascript" src="../../resources/js/login.js"></script>
+
     <link href="../../resources/css/login2.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-<h1>后台登录模板下载<sup>V2014</sup></h1>
-
+<h1>在线笔试答题</h1>
 <div class="login" style="margin-top:50px;">
 
     <div class="header">
@@ -37,7 +37,8 @@
 
 
                 <div class="login_form">
-                    <form action="" name="loginform" accept-charset="utf-8" id="login_form" onsubmit="login()" class="loginForm"
+                    <form action="" name="loginform" accept-charset="utf-8" id="login_form"
+                          onsubmit="login();return false;" class="loginForm"
                           method="post"><input type="hidden" name="did" value="0"/>
                         <input type="hidden" name="to" value="log"/>
                         <div class="uinArea" id="uinArea">
@@ -65,18 +66,50 @@
         </div>
         <!--登录end-->
     </div>
-
+    <script type="text/javascript">
+        function login() {
+            //登陆ajax
+            var data = {
+                "username": $("#username").val(),
+                "password": md5($('#password').val()),
+                statis: 1
+            };
+            $('#password').val(md5($('#password').val()));
+            $.ajax({
+                type: 'POST',
+                url: '/user/login.do',
+                contentType: 'application/json;charset=UTF-8',
+                dataType: 'json',
+                data: JSON.stringify(data),
+                success: function (data) {
+                    return loginResult(data);
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+        }
+        ;
+        function loginResult(result) {
+            if (result["isSuccessful"]) {
+                window.location.href = '/user/exam';
+            }
+            else {
+                alert("没有该用户");
+                window.location.reload(true);
+            }
+        }
+    </script>
     <!--注册-->
     <div class="qlogin" id="qlogin" style="display: none; ">
 
         <div class="web_login">
-            <form name="form2" id="regUser" accept-charset="utf-8" action="" method="post">
+            <form name="form2" id="regUser" accept-charset="utf-8" action="" method="post" onsubmit="">
                 <input type="hidden" name="to" value="reg"/>
                 <input type="hidden" name="did" value="0"/>
                 <ul class="reg_form" id="reg-ul">
                     <div id="userCue" class="cue">快速注册请注意格式</div>
                     <li>
-
                         <label for="user" class="input-tips2">用户名：</label>
                         <div class="inputOuter2">
                             <input type="text" id="user" name="user" maxlength="16" class="inputstyle2"/>
@@ -118,14 +151,13 @@
                     <li>
                         <label for="email" class="input-tips2">email：</label>
                         <div class="inputOuter2">
-
                             <input type="text" id="email" name="email" maxlength="10" class="inputstyle2"/>
                         </div>
 
                     </li>
                     <li>
                         <div class="inputArea">
-                            <input type="button" id="reg" style="margin-top:10px;margin-left:85px;" class="button_blue"
+                            <input type="submit" id="reg" style="margin-top:10px;margin-left:85px;" class="button_blue"
                                    value="同意协议并注册"/> <a href="#" class="zcxy" target="_blank">注册协议</a>
                         </div>
 
@@ -141,6 +173,8 @@
     </div>
     <!--注册end-->
 </div>
-<div class="jianyi">*推荐使用ie8或以上版本ie浏览器或Chrome内核浏览器访问本站</div>
+<script type="text/javascript" src="../../resources/js/md5.min.js"></script>
+<script type="text/javascript" src="../../resources/js/jquery-1.9.0.min.js"></script>
+<script type="text/javascript" src="../../resources/js/login.js"></script>
 </body>
 </html>

@@ -1,10 +1,13 @@
 .selectBox{
     margin: 20px 20px;
-    width: 200px;
+    width: 100%;
     height: auto;
-    box-shadow: inset 1px -1px 1px #11fbfb, inset -1px 1px 1px #00f5d0;
 }
 #next #back{
     cursor: pointer; width: 82px; height: 30px; background: #2330fb; color: white; text-align: center; line-height: 30px;
     border-radius: 5px;
+}
+
+.forceButton{
+    background-color: #2bb4dc;
 }

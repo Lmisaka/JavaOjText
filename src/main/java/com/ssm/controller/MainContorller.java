@@ -11,16 +11,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MainContorller {
     @RequestMapping(value = "/")
     public String index() {
-        return "bootstrap";
+        return "login";
     }
 
-    @RequestMapping(value = "/adminLogin")
-    public String adminLogin() {
-        return "adminLogin";
+    @RequestMapping(value = "/time")
+    public String time() {
+        return "time";
     }
 
     @RequestMapping(value = "/text")
     public String text() {
-        return "IsMyWriteHtml";
+        return "exam";
     }
 }

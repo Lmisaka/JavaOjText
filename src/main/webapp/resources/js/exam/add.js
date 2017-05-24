@@ -104,6 +104,10 @@ function programmeSubmit() {
         alert("请输入预期输出");
         return false;
     }
+    if ("" == $('#textCase').val()) {
+        alert("请输入预期输出");
+        return false;
+    }
     if ("" == $('#inputLimitTime').val()) {
         alert("请输入时间限制");
         return false;
@@ -112,8 +116,10 @@ function programmeSubmit() {
     var data = {
         "detail": $('#programmeDetail').val(),
         "output": $('#output').val(),
+        "textCase":$('#textCase').val(),
         timeLimit: $('#inputLimitTime').val()
     };
+    alert(JSON.stringify(data));
     if ($('#problemId').html() != "")
         data.id = $('#problemId').html();
     $.ajax({

@@ -2,17 +2,15 @@
  * Created by OvO on 2017/4/17.
  */
 window.tableLine = new Array("success", "error", "warning", "info");//表格的样式
-
-
 /**
- *
- * @param ProblemId
+ *生成页面按钮
+ * @param ProblemId 题目类型
  */
 function getPage(ProblemId) {
     $.ajax(
         {
             type: 'get',
-            url: '/select/pageCount/' + ProblemId,
+            url: 'http://localhost:8080/select/pageCount/' + ProblemId,
             contentType: 'application/json',
             success: function (data) {
                 $('.pageButton').empty();
@@ -20,7 +18,7 @@ function getPage(ProblemId) {
                 problemPageFunction(1);
                 for (var i = 1; i <= data.page; i++
                 ) {
-                    $('.pageButton').append("<li><button class='" + i + "' onclick='problemPageFunction(" + i + ")'>" + i + "</button></li>");
+                    $('.pageButton').append($("<li id='buttonList'><button class='" + i + "' onclick='problemPageFunction(" + i + ")'>" + i + "</button></li>"));
                 }
                 //TODO 下一页功能未实现
                 if (data > 1) {
@@ -40,7 +38,7 @@ function getPage(ProblemId) {
 function update(id) {
     $.ajax({
         type: 'post',
-        url: "/select/getId/" + $('#problemSelect').val() + "/" + id,
+        url: "http://localhost:8080/select/getId/" + $('#problemSelect').val() + "/" + id,
         contentType: 'application/json',
         success: function (data) {//返回的是json数组
             var i = parseInt($('#problemSelect').val());
@@ -188,7 +186,7 @@ function createFromProblem(id) {
 function deleteByid(id) {
     $.ajax({
         type: 'post',
-        url: "/delete/" + $('#problemSelect').val() + "/" + id,
+        url: "http://localhost:8080/delete/" + $('#problemSelect').val() + "/" + id,
         contentType: 'application/json',
         success: function (data) {
             if (data.result == "success") {
@@ -215,4 +213,16 @@ function createDivProblem(msg) {
         returnDiv.id = arguments[2];
     returnDiv.innerHTML = msg;
     return returnDiv;
+}
+
+/**
+ * TODO
+ * 高亮当前页面
+ * 修改样式
+ * 添加上一页和下一页
+ */
+function pageButton(page) {
+    // $('#buttonList'+' .'+$('#pageNum').html()).removeClass();
+    // $('#buttonList'+' .'+page).addClass("forceButton");
+
 }

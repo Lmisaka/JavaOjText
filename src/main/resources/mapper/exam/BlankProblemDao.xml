@@ -37,6 +37,9 @@
     <select id="getSubStrLimitList" resultType="java.util.HashMap" parameterType="map">
         SELECT id,LEFT(blank_detail,25) AS detail FROM blank_problem ORDER BY id ASC limit #{start},#{limit}
     </select>
+    <select id="getAnswerById" resultType="String" parameterType="java.lang.Integer">
+        SELECT key_word FROM blank_problem WHERE id=#{id,jdbcType=INTEGER}
+    </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from blank_problem
     where id = #{id,jdbcType=INTEGER}

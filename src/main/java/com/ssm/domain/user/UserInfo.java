@@ -5,6 +5,8 @@ public class UserInfo {
 
     private String password;
 
+    private String email;
+
     private Integer qqNumber;
 
     private Integer telNumber;
@@ -39,5 +41,24 @@ public class UserInfo {
 
     public void setTelNumber(Integer telNumber) {
         this.telNumber = telNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", qqNumber=" + qqNumber +
+                ", telNumber=" + telNumber +
+                '}';
     }
 }

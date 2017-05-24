@@ -93,4 +93,8 @@ public class SelectProblemService implements ProblemService {
         return selectProblemDao.getLimitList(paraMap);
     }
 
+    public int getAnswerById(Integer id){
+        return selectProblemDao.getCorrectAnswerById(id);
+    }
+
 }

@@ -67,4 +67,6 @@ public interface BlankProblemDao {
      * @return
      */
     List<HashMap<String,String>> getSubStrLimitList(HashMap<String,Object> paraMap);
+
+    String getAnswerById(Integer id);
 }

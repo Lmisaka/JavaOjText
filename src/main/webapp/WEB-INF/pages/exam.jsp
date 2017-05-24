@@ -19,6 +19,8 @@
     <script src="../../resources/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="../../resources/js/exam/ProblemForm.js" type="text/javascript"></script>
     <script src="../../resources/js/util/GetInfoForProblem.js" type="text/javascript"></script>
+    <script src="../../resources/js/exam/match.js" type="text/javascript"></script>
+    <script src="../../resources/js/exam/examPage.js" type="text/javascript"></script>
 </head>
 <body>
 <script language="JavaScript">
@@ -27,6 +29,7 @@
         $('#blankPage').hide();
         $('#unProgrammePage').hide();
         $('#programmePage').hide();
+        setInterval("countDown()", 1000);
     })
 </script>
 <div class="container-fluid">
@@ -46,7 +49,7 @@
         </div>
     </div>
     <div class="row-fluid">
-        <div class="col-xs-6 span4">
+        <div class="col-xs-6 span4 menu">
             <ul class="nav nav-list">
                 <li class="nav-header">
                     列表标题
@@ -77,10 +80,12 @@
             </ul>
         </div>
         <%--开始答题--%>
-        <div class="col-xs-6 span4">
-            <div id="beginButton"><button class="btn btn-primary" id="begin" onclick="beginButton()">开始答题</button></div>
+        <div class="col-xs-6 span4" id="page">
+            <div id="beginButton">
+                <button class="btn btn-primary" id="begin" onclick="beginButton()">开始答题</button>
+            </div>
             <div class="control-group" id="formPage">
-                <form id="examForm">
+                <form id="examForm" action="" onsubmit="examSubmit()" method="post">
                     <div class="control-group" id="selectPage">
                         <strong>一、选择题</strong><br>
                     </div>
@@ -97,18 +102,28 @@
             </div>
         </div>
         <div class="col-xs-6 span4">
+            <div id="countDown">
+                <p style="float: left;">剩余时间 </p>
+                <p style="float: left;" id="min">120<span id="">:</span><span>
+                <p style="float: left;">:</p>
+                <p id="sec">0</p></span></p>
+            </div>
+            <div style="float: none;">
+            <object type="application/x-shockwave-flash" style="outline:none;"
+                    data="http://cdn.abowman.com/widgets/hamster/hamster.swf?" width="300" height="225">
+                <param name="movie" value="http://cdn.abowman.com/widgets/hamster/hamster.swf?"></param>
+                <param name="AllowScriptAccess" value="always"></param>
+                <param name="wmode" value="opaque"></param>
+            </object>
+            </div>
         </div>
     </div>
     <div class="row-fluid">
         <div class="span12">
-            <address><strong>Twitter, Inc.</strong><br/> 795 Folsom Ave, Suite 600<br/> San Francisco, CA 94107<br/>
-                <abbr title="Phone">P:</abbr> (123) 456-7890
-            </address>
+            <%--<address><strong></strong><br/> 795 Folsom Ave, Suite 600<br/> San Francisco, CA 94107<br/>--%>
+                <%--<abbr title="Phone">P:</abbr> (123) 456-7890--%>
+            <%--</address>--%>
         </div>
-    </div>
-</div>
-<div class="container-fluid">
-    <div class="row-fluid" style="box-shadow: inset 1px -1px 1px #11fbfb, inset -1px 1px 1px #00f5d0;">
     </div>
 </div>
 </body>

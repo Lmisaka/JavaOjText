@@ -77,4 +77,8 @@ public class BlankProblemService implements ProblemService {
     public List<HashMap<String,String>> getSubStrLimitList(HashMap<String, Object> paraMap){
         return blankProblemDao.getSubStrLimitList(paraMap);
     }
+
+    public String getAnswerById(Integer id){
+        return blankProblemDao.getAnswerById(id);
+    }
 }

@@ -55,9 +55,10 @@ problemPage[3] = getUnProgrammePage;
  * @param page
  */
 function getBlankPage(page) {
+    pageButton(page);
     $.ajax({
         type: 'post',
-        url: 'select/blank/' + page,
+        url: 'http://localhost:8080/select/blank/' + page,
         contentType: 'application/json',
         success: function (data) {
             var num = 0;
@@ -75,9 +76,10 @@ function getBlankPage(page) {
  * @param page
  */
 function getSelectPage(page) {
+    pageButton(page);
     $.ajax({
         type: 'post',
-        url: 'select/select/' + page,
+        url: 'http://localhost:8080/select/select/' + page,
         contentType: 'application/json',
         success: function (data) {
             var num = 0;
@@ -96,9 +98,10 @@ function getSelectPage(page) {
  * @param page
  */
 function getProgrammePage(page) {
+    pageButton(page);
     $.ajax({
         type: 'post',
-        url: 'select/programme/' + page,
+        url: 'http://localhost:8080/select/programme/' + page,
         contentType: 'application/json',
         success: function (data) {
             var num = 0;
@@ -117,9 +120,10 @@ function getProgrammePage(page) {
  * @param page
  */
 function getUnProgrammePage(page) {
+    pageButton(page);
     $.ajax({
         type: 'post',
-        url: 'select/unprogramme/' + page,
+        url: 'http://localhost:8080/select/unprogramme/' + page,
         contentType: 'application/json',
         success: function (data) {
             var num = 0;

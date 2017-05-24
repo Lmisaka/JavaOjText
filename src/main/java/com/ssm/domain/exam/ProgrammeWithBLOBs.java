@@ -5,12 +5,23 @@ public class ProgrammeWithBLOBs extends Programme {
 
     private String output;
 
+    private String textCase;
+
     @Override
     public String toString() {
         return "ProgrammeWithBLOBs{" +
                 "detail='" + detail + '\'' +
                 ", output='" + output + '\'' +
+                ", textCase='" + textCase + '\'' +
                 '}';
+    }
+
+    public String getTextCase() {
+        return textCase;
+    }
+
+    public void setTextCase(String textCase) {
+        this.textCase = textCase == null ? null : textCase.trim();
     }
 
     public String getDetail() {

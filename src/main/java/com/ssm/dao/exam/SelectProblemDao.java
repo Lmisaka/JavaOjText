@@ -66,4 +66,6 @@ public interface SelectProblemDao {
      * @return
      */
     List<HashMap<String,String>> getSubStrLimitList(HashMap<String,Object> paraMap);
+
+    int getCorrectAnswerById(Integer id);
 }
