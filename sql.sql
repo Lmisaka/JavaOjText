@@ -1,7 +1,7 @@
 CREATE TABLE admin_user
 (
     ad_username VARCHAR(25) PRIMARY KEY NOT NULL,
-    ad_password VARCHAR(25) NOT NULL,
+    ad_password VARCHAR(32) NOT NULL,
     tel VARCHAR(11) NOT NULL,
     email VARCHAR(25) NOT NULL
 );
@@ -17,7 +17,7 @@ CREATE TABLE blank_problem
 CREATE TABLE login_user
 (
     username VARCHAR(25) PRIMARY KEY NOT NULL,
-    password VARCHAR(25) NOT NULL,
+    password VARCHAR(32) NOT NULL,
     statis INT(1) DEFAULT '1' NOT NULL
 );
 CREATE INDEX ```login_user``_user_info_password_fk` ON login_user (password);
@@ -27,8 +27,15 @@ CREATE TABLE programme_problem
     detail TEXT NOT NULL,
     time_limit INT(5) DEFAULT '2000',
     id INT(11) PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    out_put TEXT NOT NULL
+    out_put TEXT NOT NULL,
+    text_case TEXT NOT NULL
 );
+CREATE TABLE programme_test_case
+(
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    test_case TEXT NOT NULL
+);
+CREATE INDEX ```programme_test_case``_programme_problem_id_fk` ON programme_test_case (id);
 CREATE TABLE select_problem
 (
     detail TEXT NOT NULL,
@@ -48,10 +55,12 @@ CREATE TABLE un_programme_detail
 CREATE TABLE user_info
 (
     username VARCHAR(25) PRIMARY KEY NOT NULL,
-    password VARCHAR(25) NOT NULL,
-    qq_number VARCHAR(15) NOT NULL,
-    tel_number VARCHAR(11) NOT NULL
+    password VARCHAR(32) NOT NULL,
+    qq_number VARCHAR(15),
+    tel_number VARCHAR(11),
+    email VARCHAR(64) NOT NULL
 );
 CREATE UNIQUE INDEX ```user_info``_``qq_number``_uindex` ON user_info (qq_number);
 CREATE UNIQUE INDEX ```user_info``_``tel_number``_uindex` ON user_info (tel_number);
 CREATE UNIQUE INDEX ```user_info``_``username``_uindex` ON user_info (username);
+CREATE UNIQUE INDEX user_info_email_uindex ON user_info (email);

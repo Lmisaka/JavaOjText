@@ -95,4 +95,7 @@ public class ProgrammeService implements ProblemService {
         return programmeDao.getLimitList(paraMap);
     }
 
+    public String getOutPutById(Integer id){
+        return programmeDao.getOutPutById(id);
+    }
 }

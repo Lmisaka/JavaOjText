@@ -92,4 +92,8 @@ public class UnProgrammeService implements ProblemService {
     public List<Unprogramme> getLimitList(HashMap<String, Object> paraMap) {
         return unprogrammeDao.getLimitList(paraMap);
     }
+
+    public String getAnswerById(Integer id){
+        return unprogrammeDao.getAnswerById(id);
+    }
 }

@@ -60,4 +60,6 @@ public interface ProgrammeDao {
      * @return
      */
     List<HashMap<String,String>> getSubStrLimitList(HashMap<String,Object> paraMap);
+
+    String getOutPutById(Integer id);
 }

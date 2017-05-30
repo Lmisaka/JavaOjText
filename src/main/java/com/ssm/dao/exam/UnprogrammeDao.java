@@ -33,6 +33,7 @@ public interface UnprogrammeDao {
      */
     Unprogramme selectByPrimaryKey(Integer id);
 
+    String getAnswerById(Integer id);
     /**
      * 关键字查询
      *
